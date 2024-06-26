@@ -43,12 +43,12 @@ logger = logging.getLogger(__name__)
 def bin_to_precision(x: Union[np.ndarray, List[float]], delta_x: float = 0.1) -> np.ndarray:
     """
     Rounds a float number x to a given precision. If precision not given,
-    assumes 0.1 bin size.
-    
+    assumes 0.1 bin size
+
     Args:
-        x: Decimal number or list/array of numbers that need to be rounded.
-        delta_x: Size of the bin, optional.
-    
+        x: decimal number that needs to be rounded
+        delta_x: size of the bin, optional
+
     Returns:
         Value rounded to the given precision.
     """
@@ -57,13 +57,9 @@ def bin_to_precision(x: Union[np.ndarray, List[float]], delta_x: float = 0.1) ->
 
     if isinstance(x, list):
         x = np.array(x)
-    elif not isinstance(x, np.ndarray):
-        raise TypeError("x must be a list or numpy array")
-
     d = decimal.Decimal(str(delta_x))
     decimal_places = abs(d.as_tuple().exponent)
-    
-    return np.round(np.array([round_half_up(val / delta_x) * delta_x for val in x]), decimal_places)
+    return np.round(round_half_up(x / delta_x) * delta_x, decimal_places)
 
 
 
